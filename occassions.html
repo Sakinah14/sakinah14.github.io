@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Custom Gifts</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            font-family: "Playfair Display", serif;
+            margin: 0;
+            background-color: #FAF3E0;
+            color: #3A3A3A;
+        }
+        header.sticky-header {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background-color: #D72638;
+        }
+        nav {
+            display: flex;
+            align-items: center;
+            background-color: #7A2048;
+            padding: 10px 20px;
+        }
+        .logo {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+            flex: 4;
+        }
+        .logo:hover {
+            cursor: pointer;
+        }
+        .menu-container {
+            flex: 11;
+            display: flex;
+            justify-content: center;
+        }
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        li {
+            margin-left: 20px;
+            position: relative;
+        }
+        li a {
+            display: block;
+            color: white;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        li a:hover {
+            background-color: transparent;
+            border-radius: 4px;
+            color: white;
+            transform: scale(1.1);
+        }        
+        .container {
+            margin-top: 80px;
+            padding: 20px;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #8C1C26;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            min-width: 150px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            z-index: 1000;
+        }
+        .dropdown-menu li {
+            width: 100%;
+        }
+        .dropdown-menu li a {
+            display: block;
+            padding: 10px 16px;
+            color: white;
+            text-decoration: none;
+            text-align: left;
+            white-space: nowrap;
+        }
+        .dropdown:hover .dropdown-menu,
+        .dropdown-menu:hover {
+            display: block;
+        }
+        .dropdown-menu li a:hover,
+        .dropdown-menu li a:focus {
+            background-color: transparent;
+            color: white;
+            outline: none;
+        }
+        
+        .cart-icon {
+        font-size: 24px;
+        color: white;
+        cursor: pointer;
+        margin-left: 20px;
+        }
+
+        .cart-container {
+        display: none;
+        position: fixed;
+        top: 60px;
+        right: 20px;
+        width: 300px;
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+        padding: 15px;
+        z-index: 1000;
+        }
+
+
+       
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            justify-content: center;
+        }
+        .product-gallery {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+        }
+        .product {
+        width: 250px;
+        text-align: center;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 15px;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out;
+        }
+        .product img {
+        width: 100%;
+        border-radius: 8px;
+        }
+
+        .product:hover {
+        transform: scale(1.05);
+        }
+        .product p {
+        font-size: 18px; 
+        font-weight: bold; 
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); 
+        }
+
+        button {
+        background: linear-gradient(135deg, #ff7eb3, #ff758c);
+        color: white;
+        border: none;
+        padding: 12px 18px;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.3s ease-in-out;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+/* Hover Effect */
+        button:hover {
+        background: linear-gradient(135deg, #ff6381, #e83e8c);
+        transform: scale(1.05);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+/* Click Effect */
+        button:active {
+        transform: scale(0.95);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+        .toast-message {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: #ff758c;
+        color: white;
+        padding: 12px 18px;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: opacity 0.5s ease-in-out;
+        opacity: 1;
+        }
+
+        footer {
+            background-color: #7A2048;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            margin-top: 40px;
+        }
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: auto;
+            flex-wrap: wrap;
+        }
+        .footer-section {
+            text-align: left;
+        }
+        .footer-section h3 {
+            color: #F49D37;
+        }
+        .social-icons a {
+            font-size: 24px;
+            color: white;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        .social-icons a:hover {
+            color: #F49D37;
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body>
+    <header class="sticky-header">
+        <nav>
+            <a href="index.html" class="logo">The Gift Haven</a>
+            <div class="menu-container">
+                <ul class="menu">
+                    <li><a href="Customised.html">Customised</a></li>
+                    <li><a href="birthday.html">Birthday</a></li>
+                    <li class="dropdown">
+                        <a href="occassions.html">Occasions</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="wedding.html">Wedding</a></li>
+                            <li><a href="housew.html">House Warming</a></li>
+                            <li><a href="baby.html">Baby Shower</a></li>
+                            <li><a href="corporate.html">Corporate Gifts</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="anniversary.html">Anniversary</a></li>
+                    <li><a href="gifthamper.html">Gift Hampers</a></li>
+                    <li><a href="bestseller.html">Best Sellers</a></li>
+                </ul>
+            </div>
+            <div class="cart-icon" onclick="toggleCart()">
+    <i class="fa fa-shopping-cart"></i>
+</div>
+</div>
+        </nav>
+        <div id="cart-container" class="cart-container">
+    <h3>🛒 Your Cart</h3>
+    <div id="cart-items"></div>
+    <p><strong>Total: ₹<span id="cart-total">0.00</span></strong></p>
+    <button class="checkout-btn" onclick="checkout()">Checkout</button>
+    <div id="message-box"></div>
+</div>
+    </div>     
+    </header>
+    
+    <main>
+        <div class="container">
+            <h1>Gifts for Special Occassions</h1>
+            <div class="product-grid">
+                <div class="product">
+                    <img src="images/wedding/w1.jpg" alt="Bride to be Gift Hamper">
+                    <h2>Bride to be Gift Hamper</h2>
+                    <p class="price">₹2,500</p>
+        <button class="add-to-cart" onclick="addToCart('Bride to be Gift Hamper', 2500)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/wedding/w2.jpg" alt="Personalized Gift Basket">
+                    <h2>Personalized Gift Basket</h2>
+                    <p class="price">₹2,700</p>
+        <button class="add-to-cart" onclick="addToCart('Personalized Gift Basket', 2700)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/wedding/w4.jpg" alt="Fossil Couple's Black Watch Set">
+                    <h2>Fossil Couple's Black Watch Set</h2>
+                    <p class="price">₹10,000</p>
+        <button class="add-to-cart" onclick="addToCart('Fossil Couple's Black Watch Set', 10000)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/wedding/w5.jpg" alt="Prosperity Gift Hamper">
+                    <h2>Prosperity Gift Hamper</h2>
+                    <p class="price">₹2,500</p>
+        <button class="add-to-cart" onclick="addToCart('Prosperity Gift Hamper', 2500)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/wedding/w6.jpg" alt="Dessert Serving Set">
+                    <h2>Dessert Serving Set</h2>
+                    <p class="price">₹900</p>
+        <button class="add-to-cart" onclick="addToCart('Dessert Serving Set', 900)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/wedding/w7.jpg" alt="Perfect Pair Box">
+                    <h2>Perfect Pair Box</h2>
+                    <p class="price">₹3,000</p>
+        <button class="add-to-cart" onclick="addToCart('Perfect Pair Box', 3000)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/wedding/w8.jpg" alt="Elegant Tea Set">
+                    <h2>Elegant Tea Set</h2>
+                    <p class="price">₹2,700</p>
+        <button class="add-to-cart" onclick="addToCart('Elegant Tea Set', 2700)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/wedding/w10.jpg" alt="Bridal Beauty Box">
+                    <h2>Bridal Beauty Box</h2>
+                    <p class="price">₹2,200</p>
+        <button class="add-to-cart" onclick="addToCart('Bridal Beauty Box', 2200)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/wedding/w11.jpg" alt="Metallic Couple Watches">
+                    <h2>Metallic Couple Watches</h2>
+                    <p class="price">₹4,000</p>
+        <button class="add-to-cart" onclick="addToCart('Metallic Couple Watches', 4000)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/wedding/w12.jpg" alt="Personalized Passport Covers">
+                    <h2>Personalized Passport Covers</h2>
+                    <p class="price">₹850</p>
+        <button class="add-to-cart" onclick="addToCart('Personalized Passport Covers', 850)">Add to Cart</button>
+                </div>   
+                <div class="product">
+                    <img src="images/wedding/w13.jpg" alt="Beauty & Bliss">
+                    <h2>Beauty & Bliss</h2>
+                    <p class="price">₹2,900</p>
+        <button class="add-to-cart" onclick="addToCart('Beauty & Bliss', 2900)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/wedding/w14.jpg" alt="Golden Flower Gift">
+                    <h2>Golden Flower Gift</h2>
+                    <p class="price">₹1,400</p>
+        <button class="add-to-cart" onclick="addToCart('Golden Flower Gift', 1400)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/wedding/w15.jpg" alt=""Mr." & "Mrs." Coffee Mug Set">
+                    <h2>"Mr." & "Mrs." Coffee Mug Set</h2>
+                    <p class="price">₹700</p>
+        <button class="add-to-cart" onclick="addToCart('"Mr." & "Mrs." Coffee Mug Set', 700)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/wedding/w3.jpg" alt="Personalized Flower Wedding Favour">
+                    <h2>Personalized Flower Wedding Favour</h2>
+                    <p class="price">₹250</p>
+        <button class="add-to-cart" onclick="addToCart('Personalized Flower Wedding Favour', 250)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/wedding/w17.jpg" alt="Personalized Illuminated Calendar">
+                    <h2>Personalized Illuminated Calendar</h2>
+                    <p class="price">₹1,200</p>
+        <button class="add-to-cart" onclick="addToCart('Personalized Illuminated Calendar', 1200)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/wedding/w9.jpg" alt="Mugs & Chocolates Box">
+                    <h2>Mugs & Chocolates Box</h2>
+                    <p class="price">₹1,400</p>
+        <button class="add-to-cart" onclick="addToCart('Mugs & Chocolates Box', 1400)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/housewarming/hw1.jpg" alt="Islamic Tabletop Decor">
+                    <h2>Islamic Tabletop Decor</h2>
+                    <p class="price">₹1,500</p>
+        <button class="add-to-cart" onclick="addToCart('Islamic Tabletop Decor', 1500)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/housewarming/hw2.jpg" alt="Terrarium with Monk Figure">
+                    <h2>Terrarium with Monk Figure</h2>
+                    <p class="price">₹800</p>
+        <button class="add-to-cart" onclick="addToCart('Terrarium with Monk Figure', 800)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/housewarming/hw3.jpg" alt="Mini Scented Candle Set">
+                    <h2>Mini Scented Candle Set</h2>
+                    <p class="price">₹650</p>
+        <button class="add-to-cart" onclick="addToCart('Mini Scented Candle Set', 650)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/housewarming/hw4.jpg" alt="Floral Tea Set">
+                    <h2>Floral Tea Set</h2>
+                    <p class="price">₹1,200</p>
+        <button class="add-to-cart" onclick="addToCart('Floral Tea Set', 1200)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/housewarming/hw5.jpg" alt="Brass Ganesh Statue">
+                    <h2>Brass Ganesh Statue</h2>
+                    <p class="price">₹1,500</p>
+        <button class="add-to-cart" onclick="addToCart('Brass Ganesh Statue', 1500)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/housewarming/hw6.jpg" alt="Resin Face Sculptures">
+                    <h2>Resin Face Sculptures</h2>
+                    <p class="price">₹1,600</p>
+        <button class="add-to-cart" onclick="addToCart('Resin Face Sculptures', 1600)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/housewarming/hw7.jpg" alt="Believe Tabletop">
+                    <h2>Believe Tabletop</h2>
+                    <p class="price">₹550</p>
+        <button class="add-to-cart" onclick="addToCart('Believe Tabletop', 550)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/housewarming/hw8.jpg" alt="Mandala Wall Hanging">
+                    <h2>Mandala Wall Hanging</h2>
+                    <p class="price">₹450</p>
+        <button class="add-to-cart" onclick="addToCart('Mandala Wall Hanging', 450)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/housewarming/hw9.jpg" alt="Galaxy Crystal Lamp">
+                    <h2>Galaxy Crystal Lamp</h2>
+                    <p class="price">₹1,300</p>
+        <button class="add-to-cart" onclick="addToCart('Galaxy Crystal Lamp', 1300)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/housewarming/hw10.jpg" alt="Floral Keepsake Bottle">
+                    <h2>Floral Keepsake Bottle</h2>
+                    <p class="price">₹900</p>
+        <button class="add-to-cart" onclick="addToCart('Floral Keepsake Bottle', 900)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/housewarming/hw11.jpg" alt="Garden Gift Set">
+                    <h2>Garden Gift Set</h2>
+                    <p class="price">₹2,000</p>
+        <button class="add-to-cart" onclick="addToCart('Garden Gift Set', 2000)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/housewarming/hw12.jpg" alt="Golden Swan Decor Set">
+                    <h2>Golden Swan Decor Set</h2>
+                    <p class="price">₹1,100</p>
+        <button class="add-to-cart" onclick="addToCart('Golden Swan Decor Set', 1100)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/babyshower/bs1.webp" alt="Organic Baby Gift Hamper">
+                    <h2>Organic Baby Gift Hamper</h2>
+                    <p class="price">₹1,600</p>
+        <button class="add-to-cart" onclick="addToCart('Organic Baby Gift Hamper', 1600)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/babyshower/bs2.webp" alt="Baby Bliss Box">
+                    <h2>Baby Bliss Box</h2>
+                    <p class="price">₹3,000</p>
+        <button class="add-to-cart" onclick="addToCart('Baby Bliss Box', 3000)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/babyshower/bs3.webp" alt="Baby Bedding Set">
+                    <h2>Baby Bedding Set</h2>
+                    <p class="price">₹1,100</p>
+        <button class="add-to-cart" onclick="addToCart('Baby Bedding Set', 1100)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/babyshower/bs4.webp" alt="Johnson's Baby Care Collection">
+                    <h2>Johnson's Baby Care Collection</h2>
+                    <p class="price">₹800</p>
+        <button class="add-to-cart" onclick="addToCart('Johnson's Baby Care Collection', 800)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/babyshower/bs5.webp" alt="Motherhood Wellness Set">
+                    <h2>Motherhood Wellness Set</h2>
+                    <p class="price">₹1,200</p>
+        <button class="add-to-cart" onclick="addToCart('Motherhood Wellness Set', 1200)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/babyshower/bs6.webp" alt="Personalized Baby Shower Gift">
+                    <h2>Personalized Baby Shower Gift</h2>
+                    <p class="price">₹650</p>
+        <button class="add-to-cart" onclick="addToCart('Personalized Baby Shower Gift', 650)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/babyshower/bs7.webp" alt="Mom-to-Be Celebration Cake">
+                    <h2>Mom-to-Be Celebration Cake</h2>
+                    <p class="price">₹1,200</p>
+        <button class="add-to-cart" onclick="addToCart('Mom-to-Be Celebration Cake', 1200)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/babyshower/bs8.webp" alt="Textured Rosette Cake">
+                    <h2>Textured Rosette Cake</h2>
+                    <p class="price">₹1,800</p>
+        <button class="add-to-cart" onclick="addToCart('Textured Rosette Cake', 1800)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/babyshower/bs9.webp" alt="Newborn Essentials Basket">
+                    <h2>Newborn Essentials Basket</h2>
+                    <p class="price">₹1,650</p>
+        <button class="add-to-cart" onclick="addToCart('Newborn Essentials Basket', 1650)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/babyshower/bs10.webp" alt="Baby On Board Mugs">
+                    <h2>Baby On Board Mugs</h2>
+                    <p class="price">₹500</p>
+        <button class="add-to-cart" onclick="addToCart('Baby On Board Mugs', 500)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/babyshower/b11.webp" alt="Silver Baby Bracelet">
+                    <h2>Silver Baby Bracelet</h2>
+                    <p class="price">₹850</p>
+        <button class="add-to-cart" onclick="addToCart('Silver Baby Bracelet', 850)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/babyshower/b12.webp" alt="Personalized Baby Nest Set">
+                    <h2>Personalized Baby Nest Set</h2>
+                    <p class="price">₹1,600</p>
+        <button class="add-to-cart" onclick="addToCart('Personalized Birthday Mug with Flowers', 1600)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/babyshower/bs13.webp" alt="Cozy & Care Baby Hamper">
+                    <h2>Cozy & Care Baby Hamper</h2>
+                    <p class="price">₹2,200</p>
+        <button class="add-to-cart" onclick="addToCart('Cozy & Care Baby Hamper', 2200)">Add to Cart</button>
+                </div>
+        <div class="product">
+                    <img src="images/babyshower/bs1.webp" alt="Organic Baby Gift Hamper">
+                    <h2>Organic Baby Gift Hamper</h2>
+                    <p class="price">₹1,600</p>
+        <button class="add-to-cart" onclick="addToCart('Organic Baby Gift Hamper', 1600)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/babyshower/bs2.webp" alt="Baby Bliss Box">
+                    <h2>Baby Bliss Box</h2>
+                    <p class="price">₹3,000</p>
+        <button class="add-to-cart" onclick="addToCart('Baby Bliss Box', 3000)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/babyshower/bs3.webp" alt="Baby Bedding Set">
+                    <h2>Baby Bedding Set</h2>
+                    <p class="price">₹1,100</p>
+        <button class="add-to-cart" onclick="addToCart('Baby Bedding Set', 1100)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/babyshower/bs4.webp" alt="Johnson's Baby Care Collection">
+                    <h2>Johnson's Baby Care Collection</h2>
+                    <p class="price">₹800</p>
+        <button class="add-to-cart" onclick="addToCart('Johnson's Baby Care Collection', 800)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/babyshower/bs5.webp" alt="Motherhood Wellness Set">
+                    <h2>Motherhood Wellness Set</h2>
+                    <p class="price">₹1,200</p>
+        <button class="add-to-cart" onclick="addToCart('Motherhood Wellness Set', 1200)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/babyshower/bs6.webp" alt="Personalized Baby Shower Gift">
+                    <h2>Personalized Baby Shower Gift</h2>
+                    <p class="price">₹650</p>
+        <button class="add-to-cart" onclick="addToCart('Personalized Baby Shower Gift', 650)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/babyshower/bs7.webp" alt="Mom-to-Be Celebration Cake">
+                    <h2>Mom-to-Be Celebration Cake</h2>
+                    <p class="price">₹1,200</p>
+        <button class="add-to-cart" onclick="addToCart('Mom-to-Be Celebration Cake', 1200)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/babyshower/bs8.webp" alt="Textured Rosette Cake">
+                    <h2>Textured Rosette Cake</h2>
+                    <p class="price">₹1,800</p>
+        <button class="add-to-cart" onclick="addToCart('Textured Rosette Cake', 1800)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/babyshower/bs9.webp" alt="Newborn Essentials Basket">
+                    <h2>Newborn Essentials Basket</h2>
+                    <p class="price">₹1,650</p>
+        <button class="add-to-cart" onclick="addToCart('Newborn Essentials Basket', 1650)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/babyshower/bs10.webp" alt="Baby On Board Mugs">
+                    <h2>Baby On Board Mugs</h2>
+                    <p class="price">₹500</p>
+        <button class="add-to-cart" onclick="addToCart('Baby On Board Mugs', 500)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/babyshower/b11.webp" alt="Silver Baby Bracelet">
+                    <h2>Silver Baby Bracelet</h2>
+                    <p class="price">₹850</p>
+        <button class="add-to-cart" onclick="addToCart('Silver Baby Bracelet', 850)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/babyshower/b12.webp" alt="Personalized Baby Nest Set">
+                    <h2>Personalized Baby Nest Set</h2>
+                    <p class="price">₹1,600</p>
+        <button class="add-to-cart" onclick="addToCart('Personalized Birthday Mug with Flowers', 1600)">Add to Cart</button>
+                </div>
+                <div class="product">
+                    <img src="images/babyshower/bs13.webp" alt="Cozy & Care Baby Hamper">
+                    <h2>Cozy & Care Baby Hamper</h2>
+                    <p class="price">₹2,200</p>
+        <button class="add-to-cart" onclick="addToCart('Cozy & Care Baby Hamper', 2200)">Add to Cart</button>
+                </div>
+
+
+
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <p>Your go-to store for premium gifts, curated with love for every occasion.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p>Email: support@gifthaven.com</p>
+                <p>Phone: +91 98765 43210</p>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+        <p class="footer-bottom">© 2025 The Gift Haven. All rights reserved.</p>
+    </footer>
+    <script>
+  function getCart() {
+    return JSON.parse(localStorage.getItem("cart")) || [];
+}
+
+// Function to save cart items to localStorage
+function saveCart(cart) {
+    localStorage.setItem("cart", JSON.stringify(cart));
+}
+
+// Function to add item to cart
+function addToCart(productName, price) {
+    let cart = getCart();
+    let existingItem = cart.find(item => item.name === productName);
+
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cart.push({ name: productName, price: price, quantity: 1 });
+    }
+
+    saveCart(cart);
+    updateCartUI();
+    showToast(`${productName} added to cart!`);
+}
+
+// Function to update cart UI
+function updateCartUI() {
+    let cart = getCart();
+    let cartItemsContainer = document.getElementById("cart-items");
+    let cartTotalElement = document.getElementById("cart-total");
+
+    if (!cartItemsContainer || !cartTotalElement) return;
+
+    cartItemsContainer.innerHTML = "";
+    let total = 0;
+
+    cart.forEach(item => {
+        total += item.price * item.quantity;
+        let cartItem = document.createElement("div");
+        cartItem.innerHTML = `
+            <p>${item.name} - ₹${item.price} x ${item.quantity}</p>
+            <button onclick="removeFromCart('${item.name}')">Remove</button>
+        `;
+        cartItemsContainer.appendChild(cartItem);
+    });
+
+    cartTotalElement.textContent = total.toFixed(2);
+}
+
+// Function to remove item from cart
+function removeFromCart(productName) {
+    let cart = getCart();
+    cart = cart.filter(item => item.name !== productName);
+    saveCart(cart);
+    updateCartUI();
+}
+
+// Function to toggle cart visibility
+function toggleCart() {
+    let cartContainer = document.getElementById("cart-container");
+    cartContainer.style.display = (cartContainer.style.display === "block") ? "none" : "block";
+}
+
+// Function to show toast notification
+function showToast(message) {
+    let toast = document.createElement("div");
+    toast.className = "toast-message";
+    toast.textContent = message;
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+        toast.style.opacity = "0";
+        setTimeout(() => toast.remove(), 500);
+    }, 2000);
+}
+    function checkout() {
+    let totalAmount = document.getElementById("cart-total").innerText;
+    console.log("Total Checkout Amount:", totalAmount);
+    alert("Your total amount is ₹" + totalAmount);
+}
+
+// Initialize cart UI on page load
+document.addEventListener("DOMContentLoaded", updateCartUI);
+    </script>
+</body>
+</html>
